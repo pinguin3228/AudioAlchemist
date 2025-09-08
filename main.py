@@ -4,10 +4,10 @@ from aiogram.types import FSInputFile
 import asyncio
 import os
 
-TOKEN = "8226206985:AAGjkr1RAqVSK1quJSjWOP120iPTpvp0AGM"
+TOKEN = os.environ.get("BOT_TOKEN")
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher()
+dp = Dispatcher(bot)
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
@@ -28,8 +28,6 @@ async def convert_voice(message: types.Message):
     else:
         await message.answer("Пожалуйста, отправь голосовое сообщение.")
 
-async def main():
-    await dp.start_polling(bot)
-
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(dp.start_polling(bot))
+
